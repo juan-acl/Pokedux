@@ -5,12 +5,12 @@ import { Searcher } from './components/Searcher';
 import poke from './assets/poke.webp';
 //import { connect } from 'react-redux';
 import { getPokemons, getPokemonsWithDetails, setLoading } from './action';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { getPokemonsApi, getPokemonsImageApi }  from './api';
 
 function App () {
-  const pokemons = useSelector(state => state.get('pokemons')).toJS();
-  const loading = useSelector(state => state.get('loading'));
+  const pokemons = useSelector(state => state.getIn(['data','pokemons'], shallowEqual)).toJS();
+  const loading = useSelector(state => state.getIn(['ui', 'loading']));
   const dispatch = useDispatch();
 
   useEffect(() => {
