@@ -4,18 +4,20 @@ import { PokemonList } from './components/PokemonList';
 import { Searcher } from './components/Searcher';
 import poke from './assets/poke.webp';
 //import { connect } from 'react-redux';
-import { getPokemons, getPokemonsWithDetails, setLoading } from './action';
+//import { getPokemons, getPokemonsWithDetails, setLoading } from './action';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { getPokemonsApi, getPokemonsImageApi }  from './api';
 import { fetchPokemonsWithDetails } from './slices/dataSlice';
+import { setLoading } from './slices/uiSlice';
 
 function App () {
-  const pokemons = useSelector(state => state.data.pokemons, shallowEqual);
+  const pokemons = useSelector(state => state.data.searchedPokemon, shallowEqual);
+  const search = useSelector(state => state.data.searchedPokemo, shallowEqual);
   const loading = useSelector(state => state.ui.loading);
   const dispatch = useDispatch();
   useEffect(() => {
       dispatch(fetchPokemonsWithDetails())
-      dispatch(setLoading(false))
+      //dispatch(setLoading(false))
   }, [])
 
   return (
@@ -25,7 +27,7 @@ function App () {
           <img src={poke} alt='poke' style={{width:400, height:200}} />
         </Col>
         <Col span={8} offset={8} >
-        <Searcher />
+        <Searcher search={search} />
         </Col>
         {loading ? (
         <Col span={12} offset={12}>
