@@ -7,21 +7,15 @@ import poke from './assets/poke.webp';
 import { getPokemons, getPokemonsWithDetails, setLoading } from './action';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { getPokemonsApi, getPokemonsImageApi }  from './api';
+import { fetchPokemonsWithDetails } from './slices/dataSlice';
 
 function App () {
-  const pokemons = useSelector(state => state.getIn(['data','pokemons'], shallowEqual)).toJS();
-  const loading = useSelector(state => state.getIn(['ui', 'loading']));
+  const pokemons = useSelector(state => state.data.pokemons, shallowEqual);
+  const loading = useSelector(state => state.ui.loading);
   const dispatch = useDispatch();
-
   useEffect(() => {
-    const fetchApi = async () => {
-      dispatch(setLoading(true));
-      const responseGet = await getPokemonsApi();
-      dispatch(getPokemonsWithDetails(responseGet))
+      dispatch(fetchPokemonsWithDetails())
       dispatch(setLoading(false))
-    }
-
-    fetchApi();
   }, [])
 
   return (

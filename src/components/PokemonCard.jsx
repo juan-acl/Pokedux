@@ -2,8 +2,8 @@ import { Card } from 'antd';
 import Meta from 'antd/es/card/Meta';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { setFavorite } from '../action';
 import { StartButton } from './StartButton';
+import { setFavorite } from '../slices/dataSlice';
 
 function PokemonCard ({pokemon}) {
   const typeString = pokemon.types.map((item) => item.type.name).join(', ')
